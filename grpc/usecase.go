@@ -3,25 +3,34 @@ package grpc
 import (
 	"time"
 
-	pb "github.com/fukasawaryosuke/serve_streaming_grpc_app/pkg/grpc"
+	pb "github.com/fukasawa-ryosuke/serve_streaming_grpc_app/pkg/grpc"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type DessertStreamServer struct {
-	pb.DessertServiceServer
+	// pb.DessertServiceServer
+	//「サービスの前方互換性を保つために、自作サービス構造体にはこのUnimplementedGreetingServiceServer型を組み込むべき」
+	pb.UnimplementedDessertServiceServer
 }
 
-// NewServer　デザートを返却するgRPCサーバーを作成します。
+// gRPCサーバー作成
 func NewServer() *grpc.Server {
 	s := grpc.NewServer()
 
-	// gRPCサーバーにDessertStreamServerを登録。
+	// gRPCサーバーにDessertStreamServerを登録
+	// 「第一引数で渡したgRPCサーバー上で、第二引数で渡したgRPCサービス(GreetingServiceServer)を稼働させる」ための関数
 	pb.RegisterDessertServiceServer(s, &DessertStreamServer{})
+
+	// gRPCサーバーにリフレクションを登録
+	// リフレクションを登録することで、gRPCサーバーに対してgRPCurlなどのツールを使ってリクエストを送信できる
+	reflection.Register(s)
+
 	return s
 }
 
-// GetDessertStream デザート情報をストリームで送信します。
+// デザート情報をストリームで送信
 func (s *DessertStreamServer) GetDessertStream(req *pb.DessertRequest, stream pb.DessertService_GetDessertStreamServer) error {
 	desserts := []string{"チーズケーキ", "ティラミス", "マカロン", "エクレア", "カンノーリ", "パンナコッタ", "モンブラン", "クレープ", "シュークリーム", "フルーツタルト"}
 

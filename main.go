@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/fukasawa-ryosuke/serve_streaming_grpc_app/service/http"
 	"github.com/labstack/echo/v4"
-	"github.com/fukasawaryosuke/serve_streaming_grpc_app/service/http"
 )
 
 func main() {
@@ -13,5 +13,5 @@ func main() {
 	http.InitializeUsageRoutes(e)
 
 	// HTTPサーバーを起動
-  e.Start(":8080")
+	e.Start(":8080")
 }

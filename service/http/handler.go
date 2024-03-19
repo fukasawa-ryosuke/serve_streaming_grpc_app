@@ -3,8 +3,9 @@ package http
 import (
 	"net/http"
 
-	"github.com/fukasawaryosuke/serve_streaming_grpc_app/service/usage/usecase"
+	// "github.com/fukasawa-ryosuke/serve_streaming_grpc_app/service/usage/usecase"
 
+	"github.com/fukasawa-ryosuke/serve_streaming_grpc_app/service/usage/usecase"
 	"github.com/labstack/echo/v4"
 )
 

@@ -56,5 +56,12 @@ go run main.go
 ### リクエスト
 
 ```
+brew install grpcurl
+grpcurl -plaintext localhost:10001 list
+grpcurl -plaintext localhost:10001 list grpcApi.DessertService
+grpcurl -plaintext localhost:10001 grpcApi.DessertService.GetDessertStream
+```
+
+```
 curl -X GET http://localhost:8080/usage/sampleGrpc
 ```

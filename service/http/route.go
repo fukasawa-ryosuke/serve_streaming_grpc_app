@@ -2,11 +2,11 @@ package http
 
 import (
 	"fmt"
+	"github.com/fukasawa-ryosuke/serve_streaming_grpc_app/service/usage/usecase"
 	"log"
 	"net"
-	"github.com/fukasawaryosuke/serve_streaming_grpc_app/service/usage/usecase"
 
-	dessertGrpc "github.com/fukasawaryosuke/serve_streaming_grpc_app/grpc"
+	dessertGrpc "github.com/fukasawa-ryosuke/serve_streaming_grpc_app/grpc"
 
 	"github.com/labstack/echo/v4"
 )
@@ -26,16 +26,15 @@ func InitializeUsageRoutes(e *echo.Echo) {
 	go startGrpcServer()
 }
 
-// gRPCサーバーを起動する関数
+// gRPCサーバー起動
 func startGrpcServer() {
-	// gRPCサーバをlocalhost:10001で起動します
-    lis, err := net.Listen("tcp", "localhost:10001")
+	// gRPCサーバをlocalhost:10001で起動
+	lis, err := net.Listen("tcp", "localhost:10001")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	// grpc/usecase.goで定義したサーバを動かす処理を起動
-    s := dessertGrpc.NewServer()
+	s := dessertGrpc.NewServer()
 
 	fmt.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
