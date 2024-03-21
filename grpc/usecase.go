@@ -10,7 +10,6 @@ import (
 )
 
 type DessertStreamServer struct {
-	// pb.DessertServiceServer
 	//「サービスの前方互換性を保つために、自作サービス構造体にはこのUnimplementedGreetingServiceServer型を組み込むべき」
 	pb.UnimplementedDessertServiceServer
 }
@@ -20,11 +19,10 @@ func NewServer() *grpc.Server {
 	s := grpc.NewServer()
 
 	// gRPCサーバーにDessertStreamServerを登録
-	// 「第一引数で渡したgRPCサーバー上で、第二引数で渡したgRPCサービス(GreetingServiceServer)を稼働させる」ための関数
 	pb.RegisterDessertServiceServer(s, &DessertStreamServer{})
 
 	// gRPCサーバーにリフレクションを登録
-	// リフレクションを登録することで、gRPCサーバーに対してgRPCurlなどのツールを使ってリクエストを送信できる
+  // リフレクションを登録することで、gRPCサーバーに対してgRPCurlなどのツールを使ってリクエストを送信できる
 	reflection.Register(s)
 
 	return s

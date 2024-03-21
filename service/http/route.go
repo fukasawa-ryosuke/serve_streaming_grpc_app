@@ -15,12 +15,14 @@ func UsageRoutes(g *echo.Group, handler IUsageHandler) {
 	g.GET("/sampleGrpc", handler.SampleGrpc)
 }
 
+// HTTPルーティングの初期化
 func InitializeUsageRoutes(e *echo.Echo) {
-	usageUsecase := usecase.NewUsageUsecase()
-	usageHandler := NewUsageHandler(usageUsecase)
+	usageUsecase := usecase.NewUsageUsecase() // usecaseを初期化
+	usageHandler := NewUsageHandler(usageUsecase) // handlerを初期化
 
 	usageGroup := e.Group("/usage")
 
+	// ルーティングを登録
 	UsageRoutes(usageGroup, usageHandler)
 
 	go startGrpcServer()

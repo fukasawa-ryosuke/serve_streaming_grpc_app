@@ -1,5 +1,14 @@
 # serve_streaming_grpc_app
 
+## 概要
+・DinnerデータとDessertデータを取得する。
+
+・DessertデータをgRPCのサーバーストリームで取得する。
+
+・2つのデータには関連性がなく、非同期で処理が可能。
+
+・リクエスト時にログ出力をする。
+
 ## ディレクトリ構成
 
 ```
@@ -65,3 +74,4 @@ grpcurl -plaintext localhost:10001 grpcApi.DessertService.GetDessertStream
 ```
 curl -X GET http://localhost:8080/usage/sampleGrpc
 ```
+

@@ -49,8 +49,8 @@ func (uu *usageUsecase) GetDessertStream() {
   // 2.そのストリームのRecvメソッドを呼ぶことでレスポンスを得る
 
 	stream, err := client.GetDessertStream(context.Background(), &pb.DessertRequest{
-		Name: "アップルパイ", // このサンプルではリクエストの値は使わない
-		Id:   1,
+		// Name: "アップルパイ", // このサンプルではリクエストの値は使わない
+		// Id:   1,
 	})
 	if err != nil {
 		fmt.Printf("could not get dessert stream: %v", err)
@@ -59,20 +59,20 @@ func (uu *usageUsecase) GetDessertStream() {
 	// 非同期処理
 	var wg sync.WaitGroup
 
-	// ディナー処理
+	// ディナー受信
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		dinners := []string{"カレー", "スパゲッティ", "寿司", "ラーメン"}
 
 		for _, dinner := range dinners {
-			time.Sleep(1 * time.Second) // 時間待ちを1秒に変更
+			time.Sleep(1 * time.Second)
+
 			fmt.Printf("ディナー: %s\n\n", dinner)
 		}
 	}()
 
 	// デザート受信
-	// gRPCの処理側でSend()されたデータをここで受け取る。（デザートのデータを10回受け取る）
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
@@ -89,7 +89,7 @@ func (uu *usageUsecase) GetDessertStream() {
 				return
 			}
 
-			fmt.Printf("デザート: %s, 説明: %s, ランク: %d\n\n", dessert.Name, dessert.Description)
+			fmt.Printf("デザート: %s, 説明: %s\n\n", dessert.Name, dessert.Description)
 		}
 	}()
 
